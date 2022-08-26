@@ -1,4 +1,4 @@
-﻿namespace OOPSpotiflixV2
+﻿namespace Spotiflix001
 {
     internal class Gui
     {
@@ -25,6 +25,7 @@
                     break;
                 case ConsoleKey.NumPad2:
                 case ConsoleKey.D2:
+                    SeriesMenu();
                     break;
                 case ConsoleKey.NumPad3:
                 case ConsoleKey.D3:
@@ -79,6 +80,29 @@
                     break;
             }
         }
+        private void SeriesMenu()
+        {
+            Console.WriteLine("\nSERIES MENU\n1 for list of series\n2 for search series\n3 for add new series");
+
+            switch (Console.ReadKey(true).Key)
+            {
+                case ConsoleKey.NumPad1:
+                case ConsoleKey.D1:
+                    ShowSeriesList();
+                    ShowEpisodeList();
+                    break;
+                case ConsoleKey.NumPad2:
+                case ConsoleKey.D2:
+                    SearchSeries();
+                    break;
+                case ConsoleKey.NumPad3:
+                case ConsoleKey.D3:
+                    AddSeries();
+                    break;
+                default:
+                    break;
+            }
+        }
 
         private void AddMovie()
         {
@@ -93,6 +117,34 @@
             Console.WriteLine("Confirm adding to list (Y/N)");
             if (Console.ReadKey().Key == ConsoleKey.Y) data.MovieList.Add(movie);
         }
+        private void AddSeries()
+        {
+            Series series = new Series();
+            
+            series.Title = GetString("Title: ");
+            series.Genre = GetString("Genre: ");
+            series.ReleaseDate = GetReleaseDate();
+            series.WWW = GetString("WWW: ");
+            do
+            {
+                series.Episodes.Add(AddEpisode());
+                Console.WriteLine("Do you wish to add more episodes? (Y/N)");
+            } while (Console.ReadKey().Key == ConsoleKey.Y);
+
+            Console.WriteLine("Confirm adding to list (Y/N)");
+            if (Console.ReadKey().Key == ConsoleKey.Y) data.Serieslist.Add(series);
+
+        }
+        private Episode AddEpisode()
+        {
+            Episode episode = new Episode();
+            episode.EpisodeTitle = GetString("Episode Title: ");
+            episode.ReleaseDate = GetReleaseDate();
+            episode.Length = GetLength();
+            episode.EpisodeNum = GetInt("Episode Number: ");
+            episode.Season = GetInt("Season Number: ");
+            return episode;
+        }
 
         private void SearchMovie()
         {
@@ -104,6 +156,19 @@
                 {
                     if (movie.Title.Contains(search) || movie.Genre.Contains(search))
                         ShowMovie(movie);
+                }
+            }
+        }
+        private void SearchSeries()
+        {
+            Console.Write("Search: ");
+            string? search = Console.ReadLine();
+            foreach (Series series in data.Serieslist)
+            {
+                if (search != null)
+                {
+                    if (series.Title.Contains(search) || series.Genre.Contains(search))
+                        ShowSeries(series);
                 }
             }
         }
@@ -142,9 +207,31 @@
             return input;
         }
 
+        private int GetInt(string type)
+        {
+            int input;
+            do
+            {
+                Console.Write(type);
+                int.TryParse(Console.ReadLine(), out input);
+            }
+            while (input == null || input == 0);
+            return input;
+        }
+
         private void ShowMovie(Movie m)
         {
             Console.WriteLine($"{m.Title} {m.GetLength()} {m.Genre} {m.GetReleaseDate()} {m.WWW}");
+        }
+
+        private void ShowSeries(Series s)
+        {
+            Console.WriteLine($"{s.Title} {s.Genre} {s.GetReleaseDate()} {s.WWW}");
+        }
+
+        private void ShowEpisode(Episode e)
+        {
+            Console.WriteLine($"{e.EpisodeTitle} {e.GetReleaseDate()} {e.GetLength()} {e.Season} {e.EpisodeNum}");
         }
 
         private void ShowMovieList()
@@ -152,6 +239,31 @@
             foreach (Movie m in data.MovieList)
             {
                 ShowMovie(m);
+            }
+        }
+        private void ShowSeriesList()
+        {
+            foreach (Series s in data.Serieslist)
+            {
+                ShowSeries(s);
+            }
+        }
+        private void ShowEpisodeList()
+        {
+
+            foreach (Series s in data.Serieslist)
+            {
+
+                if (s == s.Episodes)
+                {
+                    
+                    foreach (Episode e in s.Episodes)
+                    {
+                        ShowEpisode(e);
+                    }
+
+                }
+                
             }
         }
     }

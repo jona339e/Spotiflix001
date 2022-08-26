@@ -1,4 +1,4 @@
-﻿namespace OOPSpotiflixV2
+﻿namespace Spotiflix001
 {
     internal class Movie
     {

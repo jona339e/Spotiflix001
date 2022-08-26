@@ -1,9 +1,9 @@
-﻿namespace OOPSpotiflixV2
+﻿namespace Spotiflix001
 {
     internal class Data
     {
         public List<Movie> MovieList { get; set; } = new();
-        //List<Series> serieslist;
+        public List<Series> Serieslist { get; set; } = new();
         //List<Music> musiclist;
     }
 }
