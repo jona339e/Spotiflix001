@@ -2,12 +2,10 @@
 {
     internal class Gui
     {
-        //private List<Movie> movieList;
         Data data = new Data();
         private string path = @"c:\SpotiflixData.json";
         public Gui()
         {
-            data.MovieList = new();
             //data.MovieList.Add(new Movie() { WWW=@"https:\\netflix.com/rambo3.mp4", Title="Rambo III", Genre ="Action", ReleaseDate=new DateTime(1988,5,25), Length=new DateTime(1,1,1, 1, 42, 0)});
             while (true)
             {
@@ -43,17 +41,18 @@
                     break;
             }
         }
+
         private void SaveData()
         {
-            //string path = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
             string json = System.Text.Json.JsonSerializer.Serialize(data);
             File.WriteAllText(path, json);
-            Console.WriteLine("File Saved Succesfully at " + path);
+            Console.WriteLine("File saved succesfully at " + path);
         }
 
         private void LoadData()
         {
             string json = File.ReadAllText(path);
+            //TODO Does File Exists?
             data = System.Text.Json.JsonSerializer.Deserialize<Data>(json);
             Console.WriteLine("File loaded succesfully from " + path);
         }
@@ -76,7 +75,6 @@
                 case ConsoleKey.D3:
                     AddMovie();
                     break;
-
                 default:
                     break;
             }
@@ -93,14 +91,7 @@
 
             ShowMovie(movie);
             Console.WriteLine("Confirm adding to list (Y/N)");
-            switch (Console.ReadKey().Key)
-            {
-                case ConsoleKey.Y:
-                    data.MovieList.Add(movie);
-                    break;
-                default:
-                    break;
-            }
+            if (Console.ReadKey().Key == ConsoleKey.Y) data.MovieList.Add(movie);
         }
 
         private void SearchMovie()
@@ -119,24 +110,26 @@
 
         private DateTime GetLength()
         {
-            DateTime to;
+            DateTime time;
             do
             {
                 Console.Write("Length (hh:mm:ss): ");
             }
-            while (!DateTime.TryParse("01-01-0001 " + Console.ReadLine(), out to));
-            return to;
+            while (!DateTime.TryParse("0001-01-01 " + Console.ReadLine(), out time));
+            return time;
         }
+
         private DateTime GetReleaseDate()
         {
-            DateTime dateOnly;
+            DateTime date;
             do
             {
                 Console.Write("Release Date (dd/mm/yyyy): ");
             }
-            while (!DateTime.TryParse(Console.ReadLine(), out dateOnly));
-            return dateOnly;
+            while (!DateTime.TryParse(Console.ReadLine(), out date));
+            return date;
         }
+
         private string GetString(string type)
         {
             string? input;
@@ -148,6 +141,7 @@
             while (input == null || input == "");
             return input;
         }
+
         private void ShowMovie(Movie m)
         {
             Console.WriteLine($"{m.Title} {m.GetLength()} {m.Genre} {m.GetReleaseDate()} {m.WWW}");
