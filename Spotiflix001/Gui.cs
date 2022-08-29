@@ -29,6 +29,7 @@
                     break;
                 case ConsoleKey.NumPad3:
                 case ConsoleKey.D3:
+                    MusicMenu();
                     break;
                 case ConsoleKey.NumPad4:
                 case ConsoleKey.D4:
@@ -49,7 +50,6 @@
             File.WriteAllText(path, json);
             Console.WriteLine("File saved succesfully at " + path);
         }
-
         private void LoadData()
         {
             string json = File.ReadAllText(path);
@@ -80,6 +80,28 @@
                     break;
             }
         }
+        private void MusicMenu()
+        {
+            Console.WriteLine("\nMUSIC MENU\n1 for list of music\n2 for search music\n3 for add new music");
+
+            switch (Console.ReadKey(true).Key)
+            {
+                case ConsoleKey.NumPad1:
+                case ConsoleKey.D1:
+                    ShowMusicList();
+                    break;
+                case ConsoleKey.NumPad2:
+                case ConsoleKey.D2:
+                    SearchMusic();
+                    break;
+                case ConsoleKey.NumPad3:
+                case ConsoleKey.D3:
+                    AddMusic();
+                    break;
+                default:
+                    break;
+            }
+        }
         private void SeriesMenu()
         {
             Console.WriteLine("\nSERIES MENU\n1 for list of series\n2 for search series\n3 for add new series");
@@ -89,7 +111,7 @@
                 case ConsoleKey.NumPad1:
                 case ConsoleKey.D1:
                     ShowSeriesList();
-                    ShowEpisodeList();
+                    //ShowEpisodeList();
                     break;
                 case ConsoleKey.NumPad2:
                 case ConsoleKey.D2:
@@ -116,6 +138,19 @@
             ShowMovie(movie);
             Console.WriteLine("Confirm adding to list (Y/N)");
             if (Console.ReadKey().Key == ConsoleKey.Y) data.MovieList.Add(movie);
+        }
+        private void AddMusic()
+        {
+            Music music = new Music();
+            music.Title = GetString("Title: ");
+            music.Length = GetLength();
+            music.Genre = GetString("Genre: ");
+            music.ReleaseDate = GetReleaseDate();
+            music.WWW = GetString("WWW: ");
+
+            ShowMusic(music);
+            Console.WriteLine("Confirm adding to list (Y/N)");
+            if (Console.ReadKey().Key == ConsoleKey.Y) data.MusicList.Add(music);
         }
         private void AddSeries()
         {
@@ -159,6 +194,19 @@
                 }
             }
         }
+        private void SearchMusic()
+        {
+            Console.Write("Search: ");
+            string? search = Console.ReadLine();
+            foreach (Music music in data.MusicList)
+            {
+                if (search != null)
+                {
+                    if (music.Title.Contains(search) || music.Genre.Contains(search))
+                        ShowMusic(music);
+                }
+            }
+        }
         private void SearchSeries()
         {
             Console.Write("Search: ");
@@ -173,62 +221,18 @@
             }
         }
 
-        private DateTime GetLength()
-        {
-            DateTime time;
-            do
-            {
-                Console.Write("Length (hh:mm:ss): ");
-            }
-            while (!DateTime.TryParse("0001-01-01 " + Console.ReadLine(), out time));
-            return time;
-        }
-
-        private DateTime GetReleaseDate()
-        {
-            DateTime date;
-            do
-            {
-                Console.Write("Release Date (dd/mm/yyyy): ");
-            }
-            while (!DateTime.TryParse(Console.ReadLine(), out date));
-            return date;
-        }
-
-        private string GetString(string type)
-        {
-            string? input;
-            do
-            {
-                Console.Write(type);
-                input = Console.ReadLine();
-            }
-            while (input == null || input == "");
-            return input;
-        }
-
-        private int GetInt(string type)
-        {
-            int input;
-            do
-            {
-                Console.Write(type);
-                int.TryParse(Console.ReadLine(), out input);
-            }
-            while (input == null || input == 0);
-            return input;
-        }
-
         private void ShowMovie(Movie m)
         {
             Console.WriteLine($"{m.Title} {m.GetLength()} {m.Genre} {m.GetReleaseDate()} {m.WWW}");
         }
-
+        private void ShowMusic(Music m)
+        {
+            Console.WriteLine($"{m.Title} {m.Genre} {m.GetReleaseDate()} {m.WWW}");
+        }
         private void ShowSeries(Series s)
         {
             Console.WriteLine($"{s.Title} {s.Genre} {s.GetReleaseDate()} {s.WWW}");
         }
-
         private void ShowEpisode(Episode e)
         {
             Console.WriteLine($"{e.EpisodeTitle} {e.GetReleaseDate()} {e.GetLength()} {e.Season} {e.EpisodeNum}");
@@ -241,6 +245,13 @@
                 ShowMovie(m);
             }
         }
+        private void ShowMusicList()
+        {
+            foreach (Music m in data.MusicList)
+            {
+                ShowMusic(m);
+            }
+        }
         private void ShowSeriesList()
         {
             foreach (Series s in data.Serieslist)
@@ -248,23 +259,66 @@
                 ShowSeries(s);
             }
         }
-        private void ShowEpisodeList()
-        {
+        //private void ShowEpisodeList()
+        //{
 
-            foreach (Series s in data.Serieslist)
-            {
+        //    foreach (Series s in data.Serieslist)
+        //    {
 
-                if (s == s.Episodes)
-                {
+        //        if (s == s.Episodes)
+        //        {
                     
-                    foreach (Episode e in s.Episodes)
-                    {
-                        ShowEpisode(e);
-                    }
+        //            foreach (Episode e in s.Episodes)
+        //            {
+        //                ShowEpisode(e);
+        //            }
 
-                }
+        //        }
                 
+        //    }
+        //}
+
+        private DateTime GetLength()
+        {
+            DateTime time;
+            do
+            {
+                Console.Write("Length (hh:mm:ss): ");
             }
+            while (!DateTime.TryParse("0001-01-01 " + Console.ReadLine(), out time));
+            return time;
+        }
+        private DateTime GetReleaseDate()
+        {
+            DateTime date;
+            do
+            {
+                Console.Write("Release Date (dd/mm/yyyy): ");
+            }
+            while (!DateTime.TryParse(Console.ReadLine(), out date));
+            return date;
+        }
+        private string GetString(string type)
+        {
+            string? input;
+            do
+            {
+                Console.Write(type);
+                input = Console.ReadLine();
+            }
+            while (input == null || input == "");
+            return input;
+        }
+        private int GetInt(string type)
+        {
+            int input;
+            do
+            {
+                Console.Write(type);
+                int.TryParse(Console.ReadLine(), out input);
+            }
+            while (input == null || input == 0);
+            return input;
         }
     }
 }

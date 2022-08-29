@@ -1,39 +1,16 @@
 ﻿namespace Spotiflix001
 {
-    internal class Series
+    internal class Series : Media
     {
-        public string Title { get; set; }
-        
-        public string Genre { get; set; }
-        
-        public DateTime ReleaseDate { get; set; }
-        
-        public string WWW { get; set; }
-
         public List<Episode> Episodes { get; set; } = new();
 
-        public string GetReleaseDate()
-        {
-            return ReleaseDate.ToString("D");
-        }
-
     }
-    class Episode
+    class Episode : Series
     {
-        public string EpisodeTitle { get; set; }
-        public DateTime ReleaseDate { get; set; }
-        public DateTime Length { get; set; }
+        public string? EpisodeTitle { get; set; }
         public int Season { get; set; }
         public int EpisodeNum { get; set; }
 
-        public string GetLength()
-        {
-            return Length.ToString("hh:mm");
-        }
-        public string GetReleaseDate()
-        {
-            return ReleaseDate.ToString("D");
-        }
     }
 
 
