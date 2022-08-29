@@ -93,7 +93,7 @@
 
             ShowMovie(movie);
             Console.WriteLine("Confirm adding to list (Y/N)");
-            if (Console.ReadKey().Key == ConsoleKey.Y) data.MovieList.Add(movie);
+            if (Console.ReadKey(true).Key == ConsoleKey.Y) data.MovieList.Add(movie);
         }
         private void SearchMovie()
         {
@@ -162,10 +162,10 @@
             {
                 album.AlbumListMusic.Add(AddMusic(album));
                 Console.WriteLine("Do you wish to add more music? (Y/N)");
-            } while (Console.ReadKey().Key == ConsoleKey.Y);
+            } while (Console.ReadKey(true).Key == ConsoleKey.Y);
 
             Console.WriteLine("Confirm adding to list (Y/N)");
-            if (Console.ReadKey().Key == ConsoleKey.Y) data.MusicList.Add(album);
+            if (Console.ReadKey(true).Key == ConsoleKey.Y) data.MusicList.Add(album);
 
         }
         private Music AddMusic(Album album)
@@ -218,8 +218,16 @@
         {
             foreach (Album m in data.MusicList)
             {
+                Console.Write("Album: ");
                 ShowAlbum(m);
+
+                foreach (Music mu in m.AlbumListMusic)
+                {
+                    Console.Write("Song: ");
+                    ShowMusic(mu);
+                }
             }
+
         }
 
         #endregion
@@ -261,10 +269,10 @@
             {
                 series.Episodes.Add(AddEpisode());
                 Console.WriteLine("Do you wish to add more episodes? (Y/N)");
-            } while (Console.ReadKey().Key == ConsoleKey.Y);
+            } while (Console.ReadKey(true).Key == ConsoleKey.Y);
 
             Console.WriteLine("Confirm adding to list (Y/N)");
-            if (Console.ReadKey().Key == ConsoleKey.Y) data.Serieslist.Add(series);
+            if (Console.ReadKey(true).Key == ConsoleKey.Y) data.Serieslist.Add(series);
 
         }
         private Episode AddEpisode()
