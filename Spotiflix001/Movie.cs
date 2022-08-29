@@ -1,6 +1,7 @@
 ﻿namespace Spotiflix001
 {
-    internal class Movie : Media
+    // Sealed makes it so you cannot inheirt from the class
+    internal sealed class Movie : Media
     {
 
     }

@@ -5,7 +5,7 @@
         public List<Episode> Episodes { get; set; } = new();
 
     }
-    class Episode : Series
+    class Episode : Media
     {
         public string? EpisodeTitle { get; set; }
         public int Season { get; set; }

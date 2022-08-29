@@ -4,6 +4,6 @@
     {
         public List<Movie> MovieList { get; set; } = new();
         public List<Series> Serieslist { get; set; } = new();
-        public List<Music> MusicList { get; set; } = new();
+        public List<Album> MusicList { get; set; } = new();
     }
 }
