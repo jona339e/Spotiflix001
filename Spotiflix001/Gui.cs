@@ -314,18 +314,14 @@
             foreach (Series s in data.Serieslist)
             {
                 ShowSeries(s);
-            }
-        }
-        private void ShowEpisodeList()
-        {
-            foreach (Series s in data.Serieslist)
-            {
                 foreach (Episode e in s.Episodes)
                 {
                     ShowEpisode(e);
                 }
+
             }
         }
+
         #endregion
 
         #region Getters
