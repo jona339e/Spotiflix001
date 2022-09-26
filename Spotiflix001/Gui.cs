@@ -3,7 +3,7 @@
     internal class Gui
     {
         Data data = new Data();
-        private string path = @"c:\SpotiflixData.json";
+        private string path = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile) + @"\SpotiflixData.json";
         public Gui()
         {
             //data.MovieList.Add(new Movie() { WWW=@"https:\\netflix.com/rambo3.mp4", Title="Rambo III", Genre ="Action", ReleaseDate=new DateTime(1988,5,25), Length=new DateTime(1,1,1, 1, 42, 0)});
@@ -17,26 +17,21 @@
         {
             Console.WriteLine("\nMENU\n1 for movies\n2 for series\n3 for music\n4 for save\n5 for load");
 
-            switch (Console.ReadKey(true).Key)
+            switch (Console.ReadLine())
             {
-                case ConsoleKey.NumPad1:
-                case ConsoleKey.D1:
+                case "1":
                     MovieMenu();
                     break;
-                case ConsoleKey.NumPad2:
-                case ConsoleKey.D2:
+                case "2":
                     SeriesMenu();
                     break;
-                case ConsoleKey.NumPad3:
-                case ConsoleKey.D3:
+                case "3":
                     MusicMenu();
                     break;
-                case ConsoleKey.NumPad4:
-                case ConsoleKey.D4:
+                case "4":
                     SaveData();
                     break;
-                case ConsoleKey.NumPad5:
-                case ConsoleKey.D5:
+                case "5":
                     LoadData();
                     break;
                 default:
@@ -64,18 +59,15 @@
         {
             Console.WriteLine("\nMOVIE MENU\n1 for list of movies\n2 for search movies\n3 for add new movie");
 
-            switch (Console.ReadKey(true).Key)
+            switch (Console.ReadLine())
             {
-                case ConsoleKey.NumPad1:
-                case ConsoleKey.D1:
+                case "1":
                     ShowMovieList();
                     break;
-                case ConsoleKey.NumPad2:
-                case ConsoleKey.D2:
+                case "2":
                     SearchMovie();
                     break;
-                case ConsoleKey.NumPad3:
-                case ConsoleKey.D3:
+                case "3":
                     AddMovie();
                     break;
                 default:
@@ -128,18 +120,15 @@
         {
             Console.WriteLine("\nMUSIC MENU\n1 for list of Albums\n2 for search music\n3 for add new Album");
 
-            switch (Console.ReadKey(true).Key)
+            switch (Console.ReadLine())
             {
-                case ConsoleKey.NumPad1:
-                case ConsoleKey.D1:
+                case "1":
                     ShowMusicList();
                     break;
-                case ConsoleKey.NumPad2:
-                case ConsoleKey.D2:
+                case "2":
                     SearchMusic();
                     break;
-                case ConsoleKey.NumPad3:
-                case ConsoleKey.D3:
+                case "3":
                     AddAlbum();
                     break;
                 default:
@@ -237,19 +226,16 @@
         {
             Console.WriteLine("\nSERIES MENU\n1 for list of series\n2 for search series\n3 for add new series");
 
-            switch (Console.ReadKey(true).Key)
+            switch (Console.ReadLine())
             {
-                case ConsoleKey.NumPad1:
-                case ConsoleKey.D1:
+                case "1":
                     ShowSeriesList();
                     //ShowEpisodeList();
                     break;
-                case ConsoleKey.NumPad2:
-                case ConsoleKey.D2:
+                case "2":
                     SearchSeries();
                     break;
-                case ConsoleKey.NumPad3:
-                case ConsoleKey.D3:
+                case "3":
                     AddSeries();
                     break;
                 default:
